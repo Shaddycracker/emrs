@@ -1,0 +1,74 @@
+"use client"
+
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { signOut } from "firebase/auth"
+import { auth } from "@/src/firebase/config"
+import { toast } from "@/hooks/use-toast"
+import AdminNotices from "./admin-notices"
+import AdminAchievers from "./admin-achievers"
+import AdminGallery from "./admin-gallery"
+import AdminInquiries from "./admin-inquiries"
+
+export default function AdminDashboard({ user }: { user: any }) {
+  const [activeTab, setActiveTab] = useState("notices")
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth)
+      toast({
+        title: "Signed Out",
+        description: "You have been successfully signed out",
+      })
+    } catch (error) {
+      console.error("Sign out error:", error)
+      toast({
+        title: "Sign Out Failed",
+        description: "An error occurred while signing out",
+        variant: "destructive",
+      })
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-background">
+      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="container flex h-16 items-center justify-between">
+          <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+          <div className="flex items-center gap-4">
+            <p className="text-sm text-muted-foreground">
+              Logged in as: <span className="font-medium">{user.email}</span>
+            </p>
+            <Button variant="outline" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      <main className="container py-6">
+        <Tabs defaultValue="notices" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="notices">Notices</TabsTrigger>
+            <TabsTrigger value="achievers">Achievers</TabsTrigger>
+            <TabsTrigger value="gallery">Gallery</TabsTrigger>
+            <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
+          </TabsList>
+          <TabsContent value="notices" className="space-y-4">
+            <AdminNotices />
+          </TabsContent>
+          <TabsContent value="achievers" className="space-y-4">
+            <AdminAchievers />
+          </TabsContent>
+          <TabsContent value="gallery" className="space-y-4">
+            <AdminGallery />
+          </TabsContent>
+          <TabsContent value="inquiries" className="space-y-4">
+            <AdminInquiries />
+          </TabsContent>
+        </Tabs>
+      </main>
+    </div>
+  )
+}
