@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
 import { auth } from "@/src/firebase/config"
 import { onAuthStateChanged } from "firebase/auth"
 import AdminLogin from "@/components/admin/admin-login"
@@ -10,7 +9,6 @@ import AdminDashboard from "@/components/admin/admin-dashboard"
 export default function AdminPage() {
   const [user, setUser] = useState<any>(null)
   const [loading, setLoading] = useState(true)
-  const router = useRouter()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

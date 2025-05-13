@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import { getAllNotices } from "@/src/firebase/firestore"
+import { getAllNotices } from "@/src/firebase/Notices/Notices"
 import {
     Card,
     CardContent,
@@ -30,11 +30,11 @@ export default async function NoticesPage() {
                                 <CardTitle>{notice.title}</CardTitle>
                                 <CardDescription className="flex items-center text-sm text-muted-foreground">
                                     <CalendarIcon className="mr-1 h-3 w-3" />
-                                    {new Date(notice.date).toLocaleDateString()}
+                                    {notice.date.toDate().toLocaleDateString()}
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="text-sm">
-                                <p>{notice.content || notice.description}</p>
+                                <p>{notice.content }</p>
                             </CardContent>
                             <CardFooter className="border-t bg-muted/50 px-6 py-3">
                                 <p className="text-xs text-muted-foreground">

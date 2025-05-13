@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import {Menu} from "lucide-react"
 import { ModeToggle } from "./mode-toggle"
+import {LanguageToggle} from "./language-toggle";
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -43,6 +45,7 @@ export default function Navbar() {
                   </Link>
               ))}
               <ModeToggle/>
+              <LanguageToggle/>
               <Button asChild variant="default">
                 <Link href="/admin">Admin</Link>
               </Button>

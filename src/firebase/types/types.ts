@@ -1,16 +1,21 @@
 // types.ts
+import {Timestamp} from "firebase/firestore";
+
 export interface Notice {
+    id: string;
     title: string
     content: string
-    description: string
-    date: string | Date
+    date: Timestamp
     postedBy: string
 }
 
 export interface Achiever {
+    id: string;
     name: string
     achievement: string
-    year: number
+    session: string
+    percentage: number
+    class:string
     imageUrl?: string
 }
 
@@ -28,39 +33,6 @@ export interface Inquiry {
     submittedAt?: string
     updatedAt?: string
 }
-
-export const fakeNotices: (Notice & { id: string })[] = [
-    {
-        id: "1",
-        title: "Holiday Announcement",
-        content: "The school will remain closed on 15th August due to Independence Day.",
-        description: "School holiday notice for Independence Day.",
-        date: "2025-08-15",
-        postedBy: "Principal Office",
-    },
-    {
-        id: "2",
-        title: "PTM Scheduled",
-        content: "Parent Teacher Meeting is scheduled for 20th September at 10 AM.",
-        description: "Annual PTM invitation.",
-        date: "2025-09-10",
-        postedBy: "Class Teacher",
-    },
-]
-
-export const fakeAchievers: Achiever[] = [
-    {
-        name: "Anjali Verma",
-        achievement: "1st Rank in National Science Olympiad",
-        year: 2024,
-        imageUrl: "https://example.com/images/anjali.jpg",
-    },
-    {
-        name: "Rohan Mehta",
-        achievement: "Gold Medal in State-Level Football Championship",
-        year: 2023,
-    },
-]
 export const fakeGalleryImages: GalleryImage[] = [
     {
         url: "https://example.com/gallery/sports-day.jpg",

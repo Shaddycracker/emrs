@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import { getAllAchievers } from "@/src/firebase/firestore"
+import { getAllAchievers } from "@/src/firebase/Achivers/Achivers"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import Image from "next/image"
@@ -31,10 +31,10 @@ export default async function AchieversPage() {
                 <CardDescription>{achiever.achievement}</CardDescription>
               </CardHeader>
               <CardContent className="text-sm">
-                <p>{achiever.year}</p>
+                <p>{achiever.percentage}%</p>
               </CardContent>
               <CardFooter className="border-t bg-muted/50 px-6 py-3">
-                <p className="text-xs text-muted-foreground">Year: {achiever.year}</p>
+                <p className="text-xs text-muted-foreground">Year: {achiever.session}</p>
               </CardFooter>
             </Card>
           ))}

@@ -9,5 +9,6 @@ export const uploadImage = async (file:File, path:string) => {
   } catch (error) {
     console.error("Error uploading image:", error)
     throw error
+
   }
 }

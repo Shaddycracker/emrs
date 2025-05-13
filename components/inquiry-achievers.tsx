@@ -12,7 +12,8 @@ import { Label } from "@/components/ui/label"
 import { toast } from "@/hooks/use-toast"
 import { submitInquiry } from "@/src/firebase/firestore"
 import { useEffect } from "react"
-import { getTopAchievers } from "@/src/firebase/firestore"
+import { getTopAchievers } from "@/src/firebase/Achivers/Achivers"
+import {Achiever} from "@/src/firebase/types/types";
 
 export default function InquiryAchievers() {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ export default function InquiryAchievers() {
     message: "",
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [achievers, setAchievers] = useState<any[]>([])
+  const [achievers, setAchievers] = useState<Achiever[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -35,25 +36,31 @@ export default function InquiryAchievers() {
         // Fallback achievers if Firebase fetch fails
         setAchievers([
           {
-            id: 1,
+            id: "1",
             name: "Rahul Sharma",
             achievement: "CBSE Topper 2023",
-            image: "/placeholder.svg?height=300&width=300",
-            year: "2023",
+            imageUrl: "/placeholder.svg?height=300&width=300",
+            session: "2023",
+            class:"",
+            percentage:0
           },
           {
-            id: 2,
+            id: "2",
             name: "Priya Singh",
             achievement: "International Science Olympiad Gold Medalist",
-            image: "/placeholder.svg?height=300&width=300",
-            year: "2023",
+            imageUrl: "/placeholder.svg?height=300&width=300",
+            session: "2023",
+            class:"",
+            percentage:50
           },
           {
-            id: 3,
+            id: "3",
             name: "Amit Kumar",
             achievement: "National Sports Champion",
-            image: "/placeholder.svg?height=300&width=300",
-            year: "2022",
+            imageUrl: "/placeholder.svg?height=300&width=300",
+            session: "2022",
+            class:"",
+            percentage:30
           },
         ])
       } finally {
@@ -196,7 +203,7 @@ export default function InquiryAchievers() {
                     <div className="flex">
                       <div className="w-24 h-24 relative">
                         <img
-                          src={achiever.image || "/placeholder.svg?height=100&width=100"}
+                          src={achiever.imageUrl || "/placeholder.svg?height=100&width=100"}
                           alt={achiever.name}
                           className="w-full h-full object-cover"
                         />
@@ -204,7 +211,9 @@ export default function InquiryAchievers() {
                       <div className="p-4 flex-1">
                         <h3 className="font-semibold">{achiever.name}</h3>
                         <p className="text-sm text-muted-foreground">{achiever.achievement}</p>
-                        <p className="text-xs mt-2">Year: {achiever.year}</p>
+                        <p className="text-xs mt-2">Year: {achiever.session}</p>
+                        <p className="text-xs mt-2">Class: {achiever.class}</p>
+                        <p className="text-xs mt-2">Percentage: {achiever.percentage}</p>
                       </div>
                     </div>
                   </Card>

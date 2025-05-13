@@ -5,10 +5,12 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CalendarIcon } from "lucide-react"
-import { getRecentNotices } from "@/src/firebase/firestore"
+import { getRecentNotices } from "@/src/firebase/Notices/Notices"
+import {Notice} from "@/src/firebase/types/types"
+import {Timestamp} from "firebase/firestore";
 
 export default function NoticeSection() {
-  const [notices, setNotices] = useState<any[]>([])
+  const [notices, setNotices] = useState<Notice[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -21,24 +23,24 @@ export default function NoticeSection() {
         // Fallback notices if Firebase fetch fails
         setNotices([
           {
-            id: 1,
+            id: "1",
             title: "Annual Sports Day",
             content: "Annual Sports Day will be held on 15th May 2023. All students are requested to participate.",
-            date: new Date().toISOString(),
+            date:Timestamp.now(),
             postedBy: "Principal",
           },
           {
-            id: 2,
+            id: "2",
             title: "Parent-Teacher Meeting",
             content: "Parent-Teacher Meeting will be held on 20th May 2023. All parents are requested to attend.",
-            date: new Date(Date.now() - 86400000).toISOString(),
+            date: Timestamp.now(),
             postedBy: "Admin Office",
           },
           {
-            id: 3,
+            id: "3",
             title: "Summer Vacation",
             content: "Summer vacation will start from 1st June 2023 and school will reopen on 1st July 2023.",
-            date: new Date(Date.now() - 172800000).toISOString(),
+            date: Timestamp.now(),
             postedBy: "Principal",
           },
         ])
@@ -89,7 +91,7 @@ export default function NoticeSection() {
                 <CardTitle>{notice.title}</CardTitle>
                 <CardDescription className="flex items-center text-sm text-muted-foreground">
                   <CalendarIcon className="mr-1 h-3 w-3" />
-                  {new Date(notice.date).toLocaleDateString()}
+                  {notice.date.toDate().toLocaleDateString()}
                 </CardDescription>
               </CardHeader>
               <CardContent className="text-sm">

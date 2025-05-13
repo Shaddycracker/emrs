@@ -18,26 +18,29 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
-import { getAllAchievers, addAchiever, updateAchiever, deleteAchiever } from "@/src/firebase/firestore"
+import { getAllAchievers, addAchiever, updateAchiever, deleteAchiever } from "@/src/firebase/Achivers/Achivers"
 import { Pencil, Trash2, Plus, Upload } from "lucide-react"
 import { uploadImage } from "@/src/firebase/storage"
+import {Achiever} from "@/src/firebase/types/types";
 
 export default function AdminAchievers() {
-  const [achievers, setAchievers] = useState<any[]>([])
+  const [achievers, setAchievers] = useState<Achiever[]>([])
   const [loading, setLoading] = useState(true)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [currentAchiever, setCurrentAchiever] = useState<any>(null)
+  const [currentAchiever, setCurrentAchiever] = useState<Achiever|null>(null)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Achiever>({
+    id:"",
     name: "",
     achievement: "",
-    description: "",
-    year: new Date().getFullYear().toString(),
-    image: "",
+    session:"",
+    imageUrl: "",
+    class:"",
+    percentage:0,
   })
 
   useEffect(() => {
@@ -79,8 +82,7 @@ export default function AdminAchievers() {
 
     setUploadingImage(true)
     try {
-      const imageUrl = await uploadImage(imageFile, `achievers/${Date.now()}_${imageFile.name}`)
-      return imageUrl
+      return await uploadImage(imageFile, `achievers/${Date.now()}_${imageFile.name}`)
     } catch (error) {
       console.error("Error uploading image:", error)
       toast({
@@ -98,14 +100,14 @@ export default function AdminAchievers() {
     e.preventDefault()
 
     try {
-      let imageUrl = formData.image
+      let imageUrl = formData.imageUrl
       if (imageFile) {
         imageUrl = (await handleImageUpload()) || ""
       }
 
       await addAchiever({
         ...formData,
-        image: imageUrl,
+        imageUrl: imageUrl,
       })
 
       toast({
@@ -115,15 +117,17 @@ export default function AdminAchievers() {
 
       setIsAddDialogOpen(false)
       setFormData({
+        id:"",
         name: "",
         achievement: "",
-        description: "",
-        year: new Date().getFullYear().toString(),
-        image: "",
+        session:"",
+        imageUrl: "",
+        class:"",
+        percentage:0,
       })
       setImageFile(null)
       setImagePreview(null)
-      fetchAchievers()
+      await fetchAchievers()
     } catch (error) {
       console.error("Error adding achiever:", error)
       toast({
@@ -137,11 +141,13 @@ export default function AdminAchievers() {
   const handleEditClick = (achiever: any) => {
     setCurrentAchiever(achiever)
     setFormData({
+      id:achiever.id,
       name: achiever.name,
       achievement: achiever.achievement,
-      description: achiever.description || "",
-      year: achiever.year,
-      image: achiever.image || "",
+      session:achiever.session,
+      imageUrl: achiever.imageUrl ||"",
+      class:achiever.class,
+      percentage:achiever.percentage,
     })
     setImagePreview(achiever.image || null)
     setIsEditDialogOpen(true)
@@ -149,16 +155,17 @@ export default function AdminAchievers() {
 
   const handleEditAchiever = async (e: React.FormEvent) => {
     e.preventDefault()
-
+    setLoading(true)
+    if(!currentAchiever)return
     try {
-      let imageUrl = formData.image
+      let imageUrl = formData.imageUrl
       if (imageFile) {
         imageUrl = (await handleImageUpload()) || ""
       }
 
       await updateAchiever(currentAchiever.id, {
         ...formData,
-        image: imageUrl,
+        imageUrl: imageUrl,
       })
 
       toast({
@@ -169,7 +176,7 @@ export default function AdminAchievers() {
       setIsEditDialogOpen(false)
       setImageFile(null)
       setImagePreview(null)
-      fetchAchievers()
+      await fetchAchievers()
     } catch (error) {
       console.error("Error updating achiever:", error)
       toast({
@@ -177,6 +184,9 @@ export default function AdminAchievers() {
         description: "Failed to update achiever",
         variant: "destructive",
       })
+    }
+    finally {
+      setUploadingImage(false)
     }
   }
 
@@ -186,6 +196,8 @@ export default function AdminAchievers() {
   }
 
   const handleDeleteAchiever = async () => {
+    if(!currentAchiever)return
+    setLoading(true)
     try {
       await deleteAchiever(currentAchiever.id)
       toast({
@@ -193,7 +205,7 @@ export default function AdminAchievers() {
         description: "Achiever deleted successfully",
       })
       setIsDeleteDialogOpen(false)
-      fetchAchievers()
+      await fetchAchievers()
     } catch (error) {
       console.error("Error deleting achiever:", error)
       toast({
@@ -202,251 +214,269 @@ export default function AdminAchievers() {
         variant: "destructive",
       })
     }
+    finally {
+      setLoading(false)
+    }
   }
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Manage Achievers</h2>
-          <Button disabled>
-            <Plus className="mr-2 h-4 w-4" /> Add Achiever
-          </Button>
+        <div className="space-y-4">
+          <div className="flex justify-between items-center">
+            <h2 className="text-2xl font-bold">Manage Achievers</h2>
+            <Button disabled>
+              <Plus className="mr-2 h-4 w-4" /> Add Achiever
+            </Button>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+                <Card key={i} className="animate-pulse">
+                  <div className="aspect-square bg-muted"></div>
+                  <CardHeader>
+                    <div className="h-5 bg-muted rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-muted rounded w-1/2"></div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="h-4 bg-muted rounded w-full mb-2"></div>
+                    <div className="h-4 bg-muted rounded w-3/4"></div>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="h-8 bg-muted rounded w-full"></div>
+                  </CardFooter>
+                </Card>
+            ))}
+          </div>
         </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <Card key={i} className="animate-pulse">
-              <div className="aspect-square bg-muted"></div>
-              <CardHeader>
-                <div className="h-5 bg-muted rounded w-3/4 mb-2"></div>
-                <div className="h-3 bg-muted rounded w-1/2"></div>
-              </CardHeader>
-              <CardContent>
-                <div className="h-4 bg-muted rounded w-full mb-2"></div>
-                <div className="h-4 bg-muted rounded w-3/4"></div>
-              </CardContent>
-              <CardFooter>
-                <div className="h-8 bg-muted rounded w-full"></div>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      </div>
     )
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Manage Achievers</h2>
-        <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" /> Add Achiever
-            </Button>
-          </DialogTrigger>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-2xl font-bold">Manage Achievers</h2>
+          <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus className="mr-2 h-4 w-4" /> Add Achiever
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-md">
+              <DialogHeader>
+                <DialogTitle>Add New Achiever</DialogTitle>
+                <DialogDescription>Add a new achiever to showcase on the school website.</DialogDescription>
+              </DialogHeader>
+              <form onSubmit={handleAddAchiever} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Name</Label>
+                  <Input id="name" name="name" value={formData.name} onChange={handleChange} required/>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="achievement">Achievement</Label>
+                  <Input
+                      id="achievement"
+                      name="achievement"
+                      value={formData.achievement}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="session">Session</Label>
+                  <Textarea
+                      id="session"
+                      name="session"
+                      rows={3}
+                      value={formData.session}
+                      onChange={handleChange}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="class">Class</Label>
+                  <Input
+                      id="class"
+                      name="class"
+                      value={formData.class}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="percentage">Percentage</Label>
+                  <Input
+                      id="percentage"
+                      name="percentage"
+                      value={formData.percentage}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="image">Image</Label>
+                  <div className="flex items-center gap-2">
+                    <Input id="image" type="file" accept="image/*" onChange={handleImageChange} className="hidden"/>
+                    <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => document.getElementById("image")?.click()}
+                        className="w-full flex items-center justify-center gap-2"
+                    >
+                      <Upload className="h-4 w-4"/> Upload Image
+                    </Button>
+                  </div>
+                  {imagePreview && (
+                      <div className="mt-2">
+                        <img
+                            src={imagePreview || "/placeholder.svg"}
+                            alt="Preview"
+                            className="max-h-40 rounded-md object-cover"
+                        />
+                      </div>
+                  )}
+                </div>
+                <DialogFooter>
+                  <Button type="submit" disabled={uploadingImage}>
+                    {uploadingImage ? "Uploading..." : "Add Achiever"}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </DialogContent>
+          </Dialog>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {achievers.map((achiever) => (
+              <Card key={achiever.id} className="overflow-hidden">
+                <div className="aspect-square relative">
+                  <img
+                      src={achiever.imageUrl || "/placeholder.svg?height=300&width=300"}
+                      alt={achiever.name}
+                      className="w-full h-full object-cover"
+                  />
+                </div>
+                <CardHeader>
+                  <CardTitle>{achiever.name}</CardTitle>
+                  <CardDescription>{achiever.achievement}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <p className="line-clamp-2 text-sm">{achiever.class}</p>
+                  <p className="text-sm text-muted-foreground mt-2">Year: {achiever.session}</p>
+                  <p className="text-sm text-muted-foreground mt-2">Year: {achiever.percentage} %</p>
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                <Button variant="outline" size="sm" onClick={() => handleEditClick(achiever)}>
+                    <Pencil className="mr-2 h-4 w-4" /> Edit
+                  </Button>
+                  <Button variant="destructive" size="sm" onClick={() => handleDeleteClick(achiever)}>
+                    <Trash2 className="mr-2 h-4 w-4" /> Delete
+                  </Button>
+                </CardFooter>
+              </Card>
+          ))}
+        </div>
+
+        {/* Edit Dialog */}
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
           <DialogContent className="max-w-md">
             <DialogHeader>
-              <DialogTitle>Add New Achiever</DialogTitle>
-              <DialogDescription>Add a new achiever to showcase on the school website.</DialogDescription>
+              <DialogTitle>Edit Achiever</DialogTitle>
+              <DialogDescription>Make changes to the selected achiever.</DialogDescription>
             </DialogHeader>
-            <form onSubmit={handleAddAchiever} className="space-y-4">
+            <form onSubmit={handleEditAchiever} className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
-                <Input id="name" name="name" value={formData.name} onChange={handleChange} required />
+                <Label htmlFor="edit-name">Name</Label>
+                <Input id="edit-name" name="name" value={formData.name} onChange={handleChange} required/>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="achievement">Achievement</Label>
+                <Label htmlFor="edit-achievement">Achievement</Label>
                 <Input
-                  id="achievement"
-                  name="achievement"
-                  value={formData.achievement}
-                  onChange={handleChange}
-                  required
+                    id="edit-achievement"
+                    name="achievement"
+                    value={formData.achievement}
+                    onChange={handleChange}
+                    required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="session">Session</Label>
                 <Textarea
-                  id="description"
-                  name="description"
-                  rows={3}
-                  value={formData.description}
-                  onChange={handleChange}
+                    id="session"
+                    name="session"
+                    rows={3}
+                    value={formData.session}
+                    onChange={handleChange}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="year">Year</Label>
+                <Label htmlFor="class">Class</Label>
                 <Input
-                  id="year"
-                  name="year"
-                  type="number"
-                  min="1900"
-                  max={new Date().getFullYear()}
-                  value={formData.year}
-                  onChange={handleChange}
-                  required
+                    id="class"
+                    name="class"
+                    value={formData.class}
+                    onChange={handleChange}
+                    required
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="image">Image</Label>
+                <Label htmlFor="percentage">Percentage</Label>
+                <Input
+                    id="percentage"
+                    name="percentage"
+                    value={formData.percentage}
+                    onChange={handleChange}
+                    required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="edit-image">Image</Label>
                 <div className="flex items-center gap-2">
-                  <Input id="image" type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
+                  <Input id="edit-image" type="file" accept="image/*" onChange={handleImageChange} className="hidden"/>
                   <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => document.getElementById("image")?.click()}
-                    className="w-full flex items-center justify-center gap-2"
+                      type="button"
+                      variant="outline"
+                      onClick={() => document.getElementById("edit-image")?.click()}
+                      className="w-full flex items-center justify-center gap-2"
                   >
-                    <Upload className="h-4 w-4" /> Upload Image
+                    <Upload className="h-4 w-4"/> Change Image
                   </Button>
                 </div>
                 {imagePreview && (
-                  <div className="mt-2">
-                    <img
-                      src={imagePreview || "/placeholder.svg"}
-                      alt="Preview"
-                      className="max-h-40 rounded-md object-cover"
-                    />
-                  </div>
+                    <div className="mt-2">
+                      <img
+                          src={imagePreview || "/placeholder.svg"}
+                          alt="Preview"
+                          className="max-h-40 rounded-md object-cover"
+                      />
+                    </div>
                 )}
               </div>
               <DialogFooter>
                 <Button type="submit" disabled={uploadingImage}>
-                  {uploadingImage ? "Uploading..." : "Add Achiever"}
+                  {uploadingImage ? "Uploading..." : "Save Changes"}
                 </Button>
               </DialogFooter>
             </form>
           </DialogContent>
         </Dialog>
-      </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {achievers.map((achiever) => (
-          <Card key={achiever.id} className="overflow-hidden">
-            <div className="aspect-square relative">
-              <img
-                src={achiever.image || "/placeholder.svg?height=300&width=300"}
-                alt={achiever.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <CardHeader>
-              <CardTitle>{achiever.name}</CardTitle>
-              <CardDescription>{achiever.achievement}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="line-clamp-2 text-sm">{achiever.description}</p>
-              <p className="text-sm text-muted-foreground mt-2">Year: {achiever.year}</p>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button variant="outline" size="sm" onClick={() => handleEditClick(achiever)}>
-                <Pencil className="mr-2 h-4 w-4" /> Edit
-              </Button>
-              <Button variant="destructive" size="sm" onClick={() => handleDeleteClick(achiever)}>
-                <Trash2 className="mr-2 h-4 w-4" /> Delete
-              </Button>
-            </CardFooter>
-          </Card>
-        ))}
-      </div>
-
-      {/* Edit Dialog */}
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle>Edit Achiever</DialogTitle>
-            <DialogDescription>Make changes to the selected achiever.</DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleEditAchiever} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="edit-name">Name</Label>
-              <Input id="edit-name" name="name" value={formData.name} onChange={handleChange} required />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="edit-achievement">Achievement</Label>
-              <Input
-                id="edit-achievement"
-                name="achievement"
-                value={formData.achievement}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="edit-description">Description</Label>
-              <Textarea
-                id="edit-description"
-                name="description"
-                rows={3}
-                value={formData.description}
-                onChange={handleChange}
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="edit-year">Year</Label>
-              <Input
-                id="edit-year"
-                name="year"
-                type="number"
-                min="1900"
-                max={new Date().getFullYear()}
-                value={formData.year}
-                onChange={handleChange}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="edit-image">Image</Label>
-              <div className="flex items-center gap-2">
-                <Input id="edit-image" type="file" accept="image/*" onChange={handleImageChange} className="hidden" />
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => document.getElementById("edit-image")?.click()}
-                  className="w-full flex items-center justify-center gap-2"
-                >
-                  <Upload className="h-4 w-4" /> Change Image
-                </Button>
-              </div>
-              {imagePreview && (
-                <div className="mt-2">
-                  <img
-                    src={imagePreview || "/placeholder.svg"}
-                    alt="Preview"
-                    className="max-h-40 rounded-md object-cover"
-                  />
-                </div>
-              )}
-            </div>
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Confirm Deletion</DialogTitle>
+              <DialogDescription>
+                Are you sure you want to delete this achiever? This action cannot be undone.
+              </DialogDescription>
+            </DialogHeader>
             <DialogFooter>
-              <Button type="submit" disabled={uploadingImage}>
-                {uploadingImage ? "Uploading..." : "Save Changes"}
+              <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button variant="destructive" onClick={handleDeleteAchiever}>
+                Delete
               </Button>
             </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* Delete Confirmation Dialog */}
-      <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Confirm Deletion</DialogTitle>
-            <DialogDescription>
-              Are you sure you want to delete this achiever? This action cannot be undone.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button variant="destructive" onClick={handleDeleteAchiever}>
-              Delete
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          </DialogContent>
+        </Dialog>
+      </div>
   )
 }
