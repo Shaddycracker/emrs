@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import { getAllNotices } from "@/src/firebase/Notices/Notices"
+import { getAllNotices } from "@/firebase/Notices/Notices"
 import {
     Card,
     CardContent,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { CalendarIcon } from "lucide-react"
-import { Notice } from "@/src/firebase/types/types"
+import { Notice } from "@/firebase/types/types"
 
 export default async function NoticesPage() {
     const notices: (Notice & { id: string })[] = await getAllNotices()

@@ -4,7 +4,7 @@ import {
     CardFooter,
 } from "@/components/ui/card"
 import { notFound } from "next/navigation";
-import {getNoticeById} from "@/src/firebase/Notices/Notices";
+import {getNoticeById} from "@/firebase/Notices/Notices";
 import { Separator } from "@/components/ui/separator"
 
 interface NoticePageProps {

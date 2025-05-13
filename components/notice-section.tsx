@@ -5,8 +5,8 @@ import Link from "next/link"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { CalendarIcon } from "lucide-react"
-import { getRecentNotices } from "@/src/firebase/Notices/Notices"
-import {Notice} from "@/src/firebase/types/types"
+import { getRecentNotices } from "@/firebase/Notices/Notices"
+import {Notice} from "@/firebase/types/types"
 import {Timestamp} from "firebase/firestore";
 
 export default function NoticeSection() {

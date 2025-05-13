@@ -13,37 +13,6 @@ import {db} from './config';
 
 import { GalleryImage, Inquiry ,fakeInquiries,fakeGalleryImages} from "./types/types"
 
-// Gallery
-export const getAllGalleryImages = async (): Promise<(GalleryImage & { id: string })[]> => {
-  const galleryQuery = query(collection(db, "gallery"), orderBy("uploadedAt", "desc"))
-  const querySnapshot = await getDocs(galleryQuery)
-  return querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data()
-  } as GalleryImage & { id: string }))
-}
-
-export const getGalleryImages = async (count = 10): Promise<(GalleryImage[])> => {
-  // const galleryQuery = query(collection(db, "gallery"), orderBy("uploadedAt", "desc"), limit(count))
-  // const querySnapshot = await getDocs(galleryQuery)
-  // return querySnapshot.docs.map((doc) => ({
-  //   id: doc.id,
-  //   ...doc.data()
-  // } as GalleryImage & { id: string }))
-   return fakeGalleryImages
-}
-
-export const addGalleryImage = async (imageData: GalleryImage): Promise<string> => {
-  const docRef = await addDoc(collection(db, "gallery"), imageData)
-  return docRef.id
-}
-
-export const deleteGalleryImage = async (id: string): Promise<boolean> => {
-  const imageRef = doc(db, "gallery", id)
-  await deleteDoc(imageRef)
-  return true
-}
-
 // Inquiries
 export const getAllInquiries = async (): Promise<(Inquiry[])> => {
   // const inquiriesQuery = query(collection(db, "inquiries"), orderBy("submittedAt", "desc"))

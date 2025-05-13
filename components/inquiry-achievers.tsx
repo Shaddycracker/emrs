@@ -5,15 +5,16 @@ import type React from "react"
 import { useState } from "react"
 import Link from "next/link"
 import { Card, CardContent } from "@/components/ui/card"
+import {Badge} from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/hooks/use-toast"
-import { submitInquiry } from "@/src/firebase/firestore"
+import { submitInquiry } from "@/firebase/firestore"
 import { useEffect } from "react"
-import { getTopAchievers } from "@/src/firebase/Achivers/Achivers"
-import {Achiever} from "@/src/firebase/types/types";
+import { getTopAchievers } from "@/firebase/Achivers/Achivers"
+import {Achiever} from "@/firebase/types/types";
 
 export default function InquiryAchievers() {
   const [formData, setFormData] = useState({
@@ -192,7 +193,7 @@ export default function InquiryAchievers() {
               ))}
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="flex flex-wrap gap-5">
               {achievers.map((achiever) => (
                 <Link
                   href={`/achievers/${achiever.id}`}
@@ -210,10 +211,8 @@ export default function InquiryAchievers() {
                       </div>
                       <div className="p-4 flex-1">
                         <h3 className="font-semibold">{achiever.name}</h3>
-                        <p className="text-sm text-muted-foreground">{achiever.achievement}</p>
-                        <p className="text-xs mt-2">Year: {achiever.session}</p>
-                        <p className="text-xs mt-2">Class: {achiever.class}</p>
                         <p className="text-xs mt-2">Percentage: {achiever.percentage}</p>
+                        <Badge onClick={()=>{}}> Visit </Badge>
                       </div>
                     </div>
                   </Card>

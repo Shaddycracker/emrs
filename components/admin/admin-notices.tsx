@@ -2,7 +2,7 @@
 
 import type React from "react"
 import {Timestamp} from 'firebase/firestore'
-import {Notice} from '@/src/firebase/types/types'
+import {Notice} from '@/firebase/types/types'
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,7 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
-import { getAllNotices, addNotice, updateNotice, deleteNotice } from "@/src/firebase/Notices/Notices"
+import { getAllNotices, addNotice, updateNotice, deleteNotice } from "@/firebase/Notices/Notices"
 import { Pencil, Trash2, Plus } from "lucide-react"
 
 export default function AdminNotices() {

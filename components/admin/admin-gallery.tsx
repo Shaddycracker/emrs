@@ -16,21 +16,25 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import {Timestamp} from "firebase/firestore";
 import { toast } from "@/hooks/use-toast"
-import { getAllGalleryImages, addGalleryImage, deleteGalleryImage } from "@/src/firebase/firestore"
-import { uploadImage } from "@/src/firebase/storage"
+import { getAllGalleryImages, addGalleryImage, deleteGalleryImage } from "@/firebase/Gallery/Gallery"
+import { uploadImage } from "@/firebase/storage"
 import { Trash2, Plus, Upload } from "lucide-react"
+import {GalleryImage} from "@/firebase/types/types";
+import {useEdgeStore} from '@/lib/edgestore'
 
 export default function AdminGallery() {
-  const [images, setImages] = useState<any[]>([])
+  const [images, setImages] = useState<GalleryImage[]>([])
   const [loading, setLoading] = useState(true)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
-  const [currentImage, setCurrentImage] = useState<any>(null)
+  const [currentImage, setCurrentImage] = useState<GalleryImage|null>(null)
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
   const [caption, setCaption] = useState("")
+  const {edgestore}=useEdgeStore();
 
   useEffect(() => {
     fetchImages()
@@ -66,7 +70,7 @@ export default function AdminGallery() {
 
     setUploadingImage(true)
     try {
-      const imageUrl = await uploadImage(imageFile, `gallery/${Date.now()}_${imageFile.name}`)
+      const imageUrl = await uploadImage(imageFile,edgestore,"Gallery")
       return imageUrl
     } catch (error) {
       console.error("Error uploading image:", error)
@@ -98,9 +102,11 @@ export default function AdminGallery() {
 
       if (imageUrl) {
         await addGalleryImage({
+          id:"",
           url: imageUrl,
-          caption: caption,
-          uploadedAt: new Date().toISOString(),
+          category:"school",
+          description:"",
+          uploadedAt: Timestamp.now(),
         })
 
         toast({
@@ -130,6 +136,8 @@ export default function AdminGallery() {
   }
 
   const handleDeleteImage = async () => {
+     setLoading(true)
+      if(!currentImage)return
     try {
       await deleteGalleryImage(currentImage.id)
       toast({
@@ -227,7 +235,7 @@ export default function AdminGallery() {
                 </div>
                 <DialogFooter>
                   <Button type="submit" disabled={!imageFile || uploadingImage}>
-                    {uploadingImage ? "Uploading..." : "Add to Gallery"}
+                    {uploadingImage ? "Uploading..." : "Add to gallery"}
                   </Button>
                 </DialogFooter>
               </form>
@@ -241,13 +249,13 @@ export default function AdminGallery() {
                 <div className="aspect-square relative">
                   <img
                       src={image.url || "/placeholder.svg"}
-                      alt={image.caption || "Gallery image"}
+                      alt={image.description || "gallery image"}
                       className="w-full h-full object-cover"
                   />
                 </div>
                 <CardContent className="p-4">
-                  <p className="text-sm truncate">{image.caption || "No caption"}</p>
-                  <p className="text-xs text-muted-foreground mt-1">{new Date(image.uploadedAt).toLocaleDateString()}</p>
+                  <p className="text-sm truncate">{image.description || "No caption"}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{image.uploadedAt.toDate().toLocaleDateString()}</p>
                 </CardContent>
                 <CardFooter className="p-4 pt-0">
                   <Button variant="destructive" size="sm" className="w-full" onClick={() => handleDeleteClick(image)}>

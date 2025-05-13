@@ -1,6 +1,6 @@
-import {Notice} from "@/src/firebase/types/types";
+import {Notice} from "@/firebase/types/types";
 import {collection,doc,getDoc,getDocs, limit, orderBy, query,updateDoc,addDoc,deleteDoc} from "firebase/firestore";
-import {db} from "@/src/firebase/config";
+import {db} from "@/firebase/config";
 
 export const getRecentNotices = async (count = 3): Promise<(Notice[])> => {
     const noticesQuery = query(collection(db, "notices"), orderBy("date", "desc"), limit(count))

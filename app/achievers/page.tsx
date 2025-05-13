@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import { getAllAchievers } from "@/src/firebase/Achivers/Achivers"
+import { getAllAchievers } from "@/firebase/Achivers/Achivers"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import Image from "next/image"

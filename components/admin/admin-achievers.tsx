@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useEdgeStore } from '@/lib/edgestore';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import {
   Dialog,
@@ -18,10 +19,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { toast } from "@/hooks/use-toast"
-import { getAllAchievers, addAchiever, updateAchiever, deleteAchiever } from "@/src/firebase/Achivers/Achivers"
+import { getAllAchievers, addAchiever, updateAchiever, deleteAchiever } from "@/firebase/Achivers/Achivers"
 import { Pencil, Trash2, Plus, Upload } from "lucide-react"
-import { uploadImage } from "@/src/firebase/storage"
-import {Achiever} from "@/src/firebase/types/types";
+import { uploadImage } from "@/firebase/storage"
+import {Achiever} from "@/firebase/types/types";
 
 export default function AdminAchievers() {
   const [achievers, setAchievers] = useState<Achiever[]>([])
@@ -33,6 +34,7 @@ export default function AdminAchievers() {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [uploadingImage, setUploadingImage] = useState(false)
+  const { edgestore }  = useEdgeStore()
   const [formData, setFormData] = useState<Achiever>({
     id:"",
     name: "",
@@ -78,11 +80,11 @@ export default function AdminAchievers() {
   }
 
   const handleImageUpload = async () => {
-    if (!imageFile) return null
+    if (!imageFile || !edgestore) return null
 
     setUploadingImage(true)
     try {
-      return await uploadImage(imageFile, `achievers/${Date.now()}_${imageFile.name}`)
+      return await uploadImage(imageFile,edgestore,"Achievers")
     } catch (error) {
       console.error("Error uploading image:", error)
       toast({
@@ -358,9 +360,9 @@ export default function AdminAchievers() {
                   <CardDescription>{achiever.achievement}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="line-clamp-2 text-sm">{achiever.class}</p>
-                  <p className="text-sm text-muted-foreground mt-2">Year: {achiever.session}</p>
-                  <p className="text-sm text-muted-foreground mt-2">Year: {achiever.percentage} %</p>
+                  <p className="line-clamp-2 text-sm">Class: {achiever.class}</p>
+                  <p className="text-sm text-muted-foreground mt-2">Session: {achiever.session}</p>
+                  <p className="text-sm text-muted-foreground mt-2">Percentage: {achiever.percentage} %</p>
                 </CardContent>
                 <CardFooter className="flex justify-between">
                 <Button variant="outline" size="sm" onClick={() => handleEditClick(achiever)}>

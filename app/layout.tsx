@@ -2,7 +2,7 @@ import type React from "react"
 import "@/app/globals.css"
 import { Inter } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
-
+import { EdgeStoreProvider } from '@/lib/edgestore';
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange>
-          {children}
+          <EdgeStoreProvider>{children}</EdgeStoreProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -20,9 +20,16 @@ export interface Achiever {
 }
 
 export interface GalleryImage {
+    id:string,
     url: string
-    uploadedAt: string | Date
-    caption?: string
+    uploadedAt: Timestamp
+    category:string,
+    description:string
+
+}
+export interface Result{
+    id: string;
+
 }
 
 export interface Inquiry {
@@ -33,18 +40,6 @@ export interface Inquiry {
     submittedAt?: string
     updatedAt?: string
 }
-export const fakeGalleryImages: GalleryImage[] = [
-    {
-        url: "https://example.com/gallery/sports-day.jpg",
-        uploadedAt: "2025-03-01",
-        caption: "Annual Sports Day Highlights",
-    },
-    {
-        url: "https://example.com/gallery/science-expo.jpg",
-        uploadedAt: "2025-02-15",
-        caption: "Students explaining science projects",
-    },
-]
 
 export const fakeInquiries: Inquiry[] = [
     {

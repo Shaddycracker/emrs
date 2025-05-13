@@ -1,8 +1,8 @@
 
 // Achievers
-import {Achiever} from "@/src/firebase/types/types";
+import {Achiever} from "@/firebase/types/types";
 import {addDoc, collection, deleteDoc, doc, getDocs, orderBy, query, updateDoc,limit} from "firebase/firestore";
-import {db} from "@/src/firebase/config";
+import {db} from "@/firebase/config";
 
 export const getAllAchievers = async (): Promise<Achiever[]> => {
     const achieversQuery = query(collection(db, "achievers"), orderBy("session", "desc"))
