@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Menu } from "lucide-react"
 import { ModeToggle } from "./mode-toggle"
-import { LanguageToggle } from "./language-toggle"
+// import  LanguageToggle  from "@/app/[locale]/dashboard/_app/LanguageSwitche"
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -89,7 +89,7 @@ export default function Navbar() {
               </div>
 
               <ModeToggle/>
-              <LanguageToggle/>
+              {/*<LanguageToggle/>*/}
               <Button asChild variant="default">
                 <Link href="/admin">Admin</Link>
               </Button>

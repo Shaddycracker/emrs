@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { signOut,getAuth } from "firebase/auth"
+import { signOut, getAuth } from "firebase/auth"
 import { toast } from "@/hooks/use-toast"
 import AdminNotices from "./admin-notices"
 import AdminAchievers from "./admin-achievers"
@@ -38,10 +38,11 @@ export default function AdminDashboard({ user }: { user: any }) {
 
   return (
       <div className="min-h-screen bg-background">
+        {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container flex h-16 items-center justify-between">
+          <div className="container flex flex-col gap-4 px-4 py-4 md:flex-row md:items-center md:justify-between">
             <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4">
               <p className="text-sm text-muted-foreground">
                 Logged in as: <span className="font-medium">{user.email}</span>
               </p>
@@ -52,19 +53,26 @@ export default function AdminDashboard({ user }: { user: any }) {
           </div>
         </header>
 
-        <main className="container py-6">
+        {/* Main Content */}
+        <main className="container py-6 px-4">
           <Tabs defaultValue="notices" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-            <TabsList className="grid w-full grid-cols-3 md:grid-cols-9">
-              <TabsTrigger value="notices">Notices</TabsTrigger>
-              <TabsTrigger value="achievers">Achievers</TabsTrigger>
-              <TabsTrigger value="gallery">Gallery</TabsTrigger>
-              <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
-              <TabsTrigger value="syllabus">Syllabus</TabsTrigger>
-              <TabsTrigger value="results">Results</TabsTrigger>
-              <TabsTrigger value="sessions">Sessions</TabsTrigger>
-              <TabsTrigger value="tc">TC</TabsTrigger>
-              <TabsTrigger value="staff">Staff</TabsTrigger>
-            </TabsList>
+
+            {/* Tabs List */}
+            <div className="overflow-x-auto">
+              <TabsList className="flex w-max md:grid md:grid-cols-9 gap-2 min-w-full">
+                <TabsTrigger value="notices">Notices</TabsTrigger>
+                <TabsTrigger value="achievers">Achievers</TabsTrigger>
+                <TabsTrigger value="gallery">Gallery</TabsTrigger>
+                <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
+                <TabsTrigger value="syllabus">Syllabus</TabsTrigger>
+                <TabsTrigger value="results">Results</TabsTrigger>
+                <TabsTrigger value="sessions">Sessions</TabsTrigger>
+                <TabsTrigger value="tc">TC</TabsTrigger>
+                <TabsTrigger value="staff">Staff</TabsTrigger>
+              </TabsList>
+            </div>
+
+            {/* Tab Contents */}
             <TabsContent value="notices" className="space-y-4">
               <AdminNotices />
             </TabsContent>

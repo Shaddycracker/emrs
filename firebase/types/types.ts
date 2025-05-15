@@ -43,4 +43,17 @@ export interface Inquiry {
     submittedAt: Timestamp
     updatedAt?: Timestamp
 }
+export interface AboutUs{
+    id: string;
+    administrative:string,
+    location:string,
+    about:string
+}
 
+
+export interface Faculty {
+    id: string;
+    name: string;
+    imageUrl: string;
+    position?: string;
+}
