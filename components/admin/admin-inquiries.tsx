@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog"
 import { Badge } from "@/components/ui/badge"
 import { toast } from "@/hooks/use-toast"
-import { getAllInquiries, updateInquiryStatus, deleteInquiry } from "@/firebase/firestore"
+import { getAllInquiries, updateInquiryStatus, deleteInquiry } from "@/firebase/Inquiry/Inquiry"
 import { Eye, Trash2, Check, X } from "lucide-react"
 
 export default function AdminInquiries() {

@@ -33,30 +33,14 @@ export interface Result{
 }
 
 export interface Inquiry {
+    id: string;
     name: string
     email: string
+    mobile: string
     message: string
-    status?: "pending" | "resolved" | "rejected"
-    submittedAt?: string
-    updatedAt?: string
+    subject:string
+    status: "pending" | "resolved" | "rejected"
+    submittedAt: Timestamp
+    updatedAt?: Timestamp
 }
-
-export const fakeInquiries: Inquiry[] = [
-    {
-        name: "Suresh Kumar",
-        email: "suresh.k@example.com",
-        message: "I want to know about the admission process.",
-        status: "pending",
-        submittedAt: "2025-04-05T10:30:00Z",
-        updatedAt: "2025-04-05T10:30:00Z",
-    },
-    {
-        name: "Fatima Khan",
-        email: "fatima.k@example.com",
-        message: "Is hostel facility available for girls?",
-        status: "resolved",
-        submittedAt: "2025-04-01T09:15:00Z",
-        updatedAt: "2025-04-03T08:00:00Z",
-    },
-]
 

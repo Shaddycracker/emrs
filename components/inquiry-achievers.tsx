@@ -11,17 +11,23 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/hooks/use-toast"
-import { submitInquiry } from "@/firebase/firestore"
+import { submitInquiry } from "@/firebase/Inquiry/Inquiry"
 import { useEffect } from "react"
 import { getTopAchievers } from "@/firebase/Achivers/Achivers"
 import {Achiever} from "@/firebase/types/types";
+import {Timestamp} from "firebase/firestore"
+import {Inquiry} from "@/firebase/types/types";
 
 export default function InquiryAchievers() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<Inquiry>({
+    id:"",
     name: "",
     email: "",
-    phone: "",
+    mobile: "",
+    subject:"",
     message: "",
+    status: "pending",
+    submittedAt:Timestamp.now()
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [achievers, setAchievers] = useState<Achiever[]>([])
@@ -88,10 +94,15 @@ export default function InquiryAchievers() {
         description: "We'll get back to you soon!",
       })
       setFormData({
+        id:"",
         name: "",
         email: "",
-        phone: "",
+        mobile: "",
+        subject:"",
         message: "",
+        status: "pending",
+        submittedAt:Timestamp.now()
+
       })
     } catch (error) {
       console.error("Error submitting inquiry:", error)
@@ -117,49 +128,61 @@ export default function InquiryAchievers() {
                 <div className="space-y-2">
                   <Label htmlFor="name">Full Name</Label>
                   <Input
-                    id="name"
-                    name="name"
-                    placeholder="Enter your full name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
+                      id="name"
+                      name="name"
+                      placeholder="Enter your full name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="email">Email</Label>
                   <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="Enter your email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="mobile">Phone Number</Label>
                   <Input
-                    id="phone"
-                    name="phone"
-                    placeholder="Enter your phone number"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
+                      id="mobile"
+                      name="mobile"
+                      placeholder="Enter your mobile number"
+                      value={formData.mobile}
+                      onChange={handleChange}
+                      required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject </Label>
+                  <Input
+                      id="subject"
+                      name="subject"
+                      placeholder="Enter your subject or inquiry"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      required
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="message">Message</Label>
                   <Textarea
-                    id="message"
-                    name="message"
-                    placeholder="Enter your message or inquiry"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={4}
-                    required
+                      id="message"
+                      name="message"
+                      placeholder="Enter your message or inquiry"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={4}
+                      required
                   />
                 </div>
+
                 <Button type="submit" className="w-full" disabled={isSubmitting}>
                   {isSubmitting ? "Submitting..." : "Submit Inquiry"}
                 </Button>
@@ -178,7 +201,7 @@ export default function InquiryAchievers() {
           </div>
 
           {loading ? (
-            <div className="space-y-4">
+              <div className="space-y-4">
               {[1, 2, 3].map((i) => (
                 <Card key={i} className="animate-pulse">
                   <div className="flex">
