@@ -1,7 +1,6 @@
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Separator } from "@/components/ui/separator"
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
 import { getAboutUs } from "@/firebase/AboutUs/About"
 
 export default async function AboutPage() {

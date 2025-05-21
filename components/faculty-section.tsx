@@ -127,15 +127,18 @@ const DemoFaculties: React.FC<DemoFacultiesProps> = () => {
 
     return (
         <div className="py-12">
+
             <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold mb-8">Our Faculty</h2>
-                <FacultiesSection faculties={facultiesData} loading={loading} />
+                <h2 className="text-3xl font-bold mb-8">Community Partners</h2>
+                <FacultiesSection faculties={facultiesData} loading={loading}/>
                 {loading && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {Array.from({ length: 4 }).map((_, i) => (
-                            <Card key={i} className="relative min-h-30 overflow-hidden transition-all duration-300 group animate-pulse">
+                        {Array.from({length: 4}).map((_, i) => (
+                            <Card key={i}
+                                  className="relative min-h-30 overflow-hidden transition-all duration-300 group animate-pulse">
                                 <div className="aspect-w-3 aspect-h-4 relative bg-muted rounded-md"></div>
-                                <CardContent className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white">
+                                <CardContent
+                                    className="absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white">
                                     <div className="h-4 bg-muted rounded w-3/4 mb-2"></div>
                                     <div className="h-3 bg-muted rounded w-1/2"></div>
                                 </CardContent>

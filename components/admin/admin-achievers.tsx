@@ -25,7 +25,7 @@ import { uploadImage } from "@/firebase/storage"
 import {Achiever} from "@/firebase/types/types";
 
 export default function AdminAchievers() {
-  const [achievers, setAchievers] = useState<Achiever[]>([])
+  const [achievers , setAchievers] = useState<Achiever[]>([])
   const [loading, setLoading] = useState(true)
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false)
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)

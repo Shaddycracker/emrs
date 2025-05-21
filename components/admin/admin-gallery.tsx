@@ -46,10 +46,10 @@ export default function AdminGallery() {
       const allImages = await getAllGalleryImages()
       setImages(allImages)
     } catch (error) {
-      console.error("Error fetching gallery images:", error)
+      console.error("Error fetching gallery-photo images:", error)
       toast({
         title: "Error",
-        description: "Failed to load gallery images",
+        description: "Failed to load gallery-photo images",
         variant: "destructive",
       })
     } finally {
@@ -111,7 +111,7 @@ export default function AdminGallery() {
 
         toast({
           title: "Success",
-          description: "Image added to gallery successfully",
+          description: "Image added to gallery-photo successfully",
         })
 
         setIsAddDialogOpen(false)
@@ -121,10 +121,10 @@ export default function AdminGallery() {
         fetchImages()
       }
     } catch (error) {
-      console.error("Error adding gallery image:", error)
+      console.error("Error adding gallery-photo image:", error)
       toast({
         title: "Error",
-        description: "Failed to add image to gallery",
+        description: "Failed to add image to gallery-photo",
         variant: "destructive",
       })
     }
@@ -208,7 +208,7 @@ export default function AdminGallery() {
                     <Button
                         type="button"
                         variant="outline"
-                        onClick={() => document.getElementById("gallery-image")?.click()}
+                        onClick={() => document.getElementById("gallery-photo-image")?.click()}
                         className="w-full flex items-center justify-center gap-2"
                     >
                       <Upload className="h-4 w-4" /> Select Image
@@ -235,7 +235,7 @@ export default function AdminGallery() {
                 </div>
                 <DialogFooter>
                   <Button type="submit" disabled={!imageFile || uploadingImage}>
-                    {uploadingImage ? "Uploading..." : "Add to gallery"}
+                    {uploadingImage ? "Uploading..." : "Add to gallery-photo"}
                   </Button>
                 </DialogFooter>
               </form>
@@ -249,7 +249,7 @@ export default function AdminGallery() {
                 <div className="aspect-square relative">
                   <img
                       src={image.url || "/placeholder.svg"}
-                      alt={image.description || "gallery image"}
+                      alt={image.description || "gallery-photo image"}
                       className="w-full h-full object-cover"
                   />
                 </div>
