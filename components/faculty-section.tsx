@@ -14,7 +14,7 @@ interface FacultyCardProps {
 }
 
 const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
-    const [isHovered, setIsHovered] = useState(false)
+    // const [isHovered, setIsHovered] = useState(false)
 
     if (loading) {
         return (
@@ -31,8 +31,8 @@ const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
     return (
         <Card
             className="relative overflow-hidden transition-all duration-300 group rounded-lg shadow-lg cursor-pointer"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            // onMouseEnter={() => setIsHovered(true)}
+            // onMouseLeave={() => setIsHovered(false)}
         >
             {/* Image Section */}
             <div className="relative w-full h-64">
@@ -47,17 +47,19 @@ const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
             {/* Card Content */}
             <CardContent className="p-4 bg-black bg-opacity-70 text-white relative z-10">
                 <h3 className="text-lg font-semibold">{faculty.name}</h3>
+                <h4 className="text-blue-600 font-semibold">{faculty.position}</h4>
             </CardContent>
 
-            {/* Hover Overlay */}
-            {isHovered && faculty.position && (
-                <div className="absolute inset-0 bg-black bg-opacity-70 text-white flex flex-col items-center justify-center z-20 p-4 transition-opacity duration-300">
-                    <p className="text-sm mb-2">{faculty.position}</p>
-                    <Link href="/message" className="text-blue-400 hover:underline">
-                        View Message
-                    </Link>
-                </div>
-            )}
+
+            {/*{isHovered && */}
+            {/*{  faculty.position && (*/}
+            {/*    <div className="absolute inset-0 bg-black bg-opacity-70 text-white flex flex-col items-center justify-center z-20 p-4 transition-opacity duration-300">*/}
+            {/*        <p className="text-sm mb-2">{faculty.position}</p>*/}
+            {/*        <Link href="/message" className="text-blue-400 hover:underline">*/}
+            {/*            View Message*/}
+            {/*        </Link>*/}
+            {/*    </div>*/}
+            {/*)}*/}
         </Card>
 
     );
@@ -129,7 +131,7 @@ const DemoFaculties: React.FC<DemoFacultiesProps> = () => {
         <div className="py-12">
 
             <div className="container mx-auto px-4">
-                <h2 className="text-3xl font-bold mb-8">Community Partners</h2>
+                {/*<h2 className="text-3xl font-bold mb-8">Community Partners</h2>*/}
                 <FacultiesSection faculties={facultiesData} loading={loading}/>
                 {loading && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
