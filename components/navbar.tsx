@@ -132,7 +132,7 @@ export default function Navbar() {
                     <span className="sr-only">Toggle menu</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right">
+                <SheetContent side="right" className="overflow-y-auto max-h-screen">
                   <div className="flex flex-col gap-4 mt-8">
                     {navItems.map((item) => (
                         <Link
