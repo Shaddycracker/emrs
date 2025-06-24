@@ -9,8 +9,9 @@ export default async function ProspectusPage() {
         <div className="min-h-screen bg-background">
             <Navbar />
             <main className="container mx-auto py-10">
-                <h1 className="text-4xl font-bold mb-6">School Notices</h1>
+                <h1 className="text-4xl font-bold mb-6">prospectus</h1>
                 <Separator className="mb-8" />
+                <h2> Nothing to Show </h2>
 
             </main>
             <Footer />

@@ -11,7 +11,7 @@ export default async function TCPage() {
             <main className="container mx-auto py-10">
                 <h1 className="text-4xl font-bold mb-6">School TC</h1>
                 <Separator className="mb-8" />
-
+                <h2> No TC Yet  </h2>
             </main>
             <Footer />
         </div>

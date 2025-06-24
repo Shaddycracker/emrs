@@ -7,14 +7,13 @@ import { Card, CardContent } from '@/components/ui/card';
 import {Faculty} from "@/firebase/types/types";
 import {getfaculty} from "@/firebase/faculty/faculty";
 
-
 interface FacultyCardProps {
     faculty: Faculty;
     loading: boolean;
 }
 
 const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
-    // const [isHovered, setIsHovered] = useState(false)
+    const [isHovered, setIsHovered] = useState(false)
 
     if (loading) {
         return (
@@ -31,8 +30,8 @@ const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
     return (
         <Card
             className="relative overflow-hidden transition-all duration-300 group rounded-lg shadow-lg cursor-pointer"
-            // onMouseEnter={() => setIsHovered(true)}
-            // onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
         >
             {/* Image Section */}
             <div className="relative w-full h-64">
@@ -51,15 +50,14 @@ const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
             </CardContent>
 
 
-            {/*{isHovered && */}
-            {/*{  faculty.position && (*/}
-            {/*    <div className="absolute inset-0 bg-black bg-opacity-70 text-white flex flex-col items-center justify-center z-20 p-4 transition-opacity duration-300">*/}
-            {/*        <p className="text-sm mb-2">{faculty.position}</p>*/}
-            {/*        <Link href="/message" className="text-blue-400 hover:underline">*/}
-            {/*            View Message*/}
-            {/*        </Link>*/}
-            {/*    </div>*/}
-            {/*)}*/}
+            {isHovered && faculty && (
+                <div className="absolute inset-0 bg-black bg-opacity-70 text-white flex flex-col items-center justify-center z-20 p-4 transition-opacity duration-300">
+                    <p className="text-sm mb-2">{faculty.position}</p>
+                    <Link href="/message" className="text-blue-400 hover:underline">
+                        View Message
+                    </Link>
+                </div>
+            )}
         </Card>
 
     );

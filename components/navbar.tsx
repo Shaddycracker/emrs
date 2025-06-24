@@ -30,7 +30,7 @@ export default function Navbar() {
     { name: "Video Gallery", href: "/gallery-photo-video" },
   ]
   const managementDropDown = [
-    {name:"Communities", href: "/communities/communities" },
+    {name:"Committee", href: "/committee" },
   ]
 
   const academicDropDown = [
