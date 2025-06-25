@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { signOut, getAuth } from "firebase/auth"
 import { toast } from "@/hooks/use-toast"
+
 import AdminNotices from "./admin-notices"
 import AdminAchievers from "./admin-achievers"
 import AdminGallery from "./admin-gallery"
@@ -14,6 +15,7 @@ import AdminResults from "./admin-results"
 import AdminSessions from "./admin-sessions"
 import AdminTC from "./admin-tc"
 import AdminStaff from "./admin-staff"
+import AdminCommittees from "./admin-committe"
 
 export default function AdminDashboard({ user }: { user: any }) {
   const [activeTab, setActiveTab] = useState("notices")
@@ -56,10 +58,9 @@ export default function AdminDashboard({ user }: { user: any }) {
         {/* Main Content */}
         <main className="container py-6 px-4">
           <Tabs defaultValue="notices" value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-
             {/* Tabs List */}
             <div className="overflow-x-auto">
-              <TabsList className="flex w-max md:grid md:grid-cols-9 gap-2 min-w-full">
+              <TabsList className="flex w-max md:grid md:grid-cols-10 gap-2 min-w-full">
                 <TabsTrigger value="notices">Notices</TabsTrigger>
                 <TabsTrigger value="achievers">Achievers</TabsTrigger>
                 <TabsTrigger value="gallery">Gallery</TabsTrigger>
@@ -69,37 +70,21 @@ export default function AdminDashboard({ user }: { user: any }) {
                 <TabsTrigger value="sessions">Sessions</TabsTrigger>
                 <TabsTrigger value="tc">TC</TabsTrigger>
                 <TabsTrigger value="staff">Staff</TabsTrigger>
+                <TabsTrigger value="committees">Committees</TabsTrigger>
               </TabsList>
             </div>
 
             {/* Tab Contents */}
-            <TabsContent value="notices" className="space-y-4">
-              <AdminNotices />
-            </TabsContent>
-            <TabsContent value="achievers" className="space-y-4">
-              <AdminAchievers />
-            </TabsContent>
-            <TabsContent value="gallery" className="space-y-4">
-              <AdminGallery />
-            </TabsContent>
-            <TabsContent value="inquiries" className="space-y-4">
-              <AdminInquiries />
-            </TabsContent>
-            <TabsContent value="syllabus" className="space-y-4">
-              <AdminSyllabus />
-            </TabsContent>
-            <TabsContent value="results" className="space-y-4">
-              <AdminResults />
-            </TabsContent>
-            <TabsContent value="sessions" className="space-y-4">
-              <AdminSessions />
-            </TabsContent>
-            <TabsContent value="tc" className="space-y-4">
-              <AdminTC />
-            </TabsContent>
-            <TabsContent value="staff" className="space-y-4">
-              <AdminStaff />
-            </TabsContent>
+            <TabsContent value="notices"><AdminNotices /></TabsContent>
+            <TabsContent value="achievers"><AdminAchievers /></TabsContent>
+            <TabsContent value="gallery"><AdminGallery /></TabsContent>
+            <TabsContent value="inquiries"><AdminInquiries /></TabsContent>
+            <TabsContent value="syllabus"><AdminSyllabus /></TabsContent>
+            <TabsContent value="results"><AdminResults /></TabsContent>
+            <TabsContent value="sessions"><AdminSessions /></TabsContent>
+            <TabsContent value="tc"><AdminTC /></TabsContent>
+            <TabsContent value="staff"><AdminStaff /></TabsContent>
+            <TabsContent value="committees"><AdminCommittees /></TabsContent>
           </Tabs>
         </main>
       </div>

@@ -57,3 +57,17 @@ export interface Faculty {
     imageUrl: string;
     position?: string;
 }
+export interface Committee {
+    id: string;
+    name: string;
+    designation: string;
+    imageUrl?: string;
+}
+export interface PrincipleDesk{
+    id: string;
+    name: string;
+    about: string;
+    image: string;
+}
+
+

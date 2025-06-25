@@ -345,31 +345,41 @@ export default function AdminAchievers() {
           </Dialog>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3">
           {achievers.map((achiever) => (
-              <Card key={achiever.id} className="overflow-hidden">
-                <div className="aspect-square relative">
+              <Card
+                  key={achiever.id}
+                  className="overflow-hidden text-sm p-2 sm:p-3"
+              >
+                {/* Smaller image */}
+                <div className="relative w-full aspect-[4/3]">
                   <img
                       src={achiever.imageUrl || "/placeholder.svg?height=300&width=300"}
                       alt={achiever.name}
                       className="w-full h-full object-cover"
                   />
                 </div>
-                <CardHeader>
-                  <CardTitle>{achiever.name}</CardTitle>
-                  <CardDescription>{achiever.achievement}</CardDescription>
+
+                {/* Condensed header */}
+                <CardHeader className="px-2 py-2">
+                  <CardTitle className="text-base">{achiever.name}</CardTitle>
+                  <CardDescription className="text-xs">{achiever.achievement}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <p className="line-clamp-2 text-sm">Class: {achiever.class}</p>
-                  <p className="text-sm text-muted-foreground mt-2">Session: {achiever.session}</p>
-                  <p className="text-sm text-muted-foreground mt-2">Percentage: {achiever.percentage} %</p>
+
+                {/* Condensed content */}
+                <CardContent className="px-2 py-1">
+                  <p className="line-clamp-2 text-xs">Class: {achiever.class}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Session: {achiever.session}</p>
+                  <p className="text-xs text-muted-foreground mt-1">Percentage: {achiever.percentage} %</p>
                 </CardContent>
-                <CardFooter className="flex justify-between">
-                <Button variant="outline" size="sm" onClick={() => handleEditClick(achiever)}>
-                    <Pencil className="mr-2 h-4 w-4" /> Edit
+
+                {/* Condensed footer */}
+                <CardFooter className="flex justify-between px-2 py-2">
+                  <Button variant="outline" size="sm" className="text-xs px-2 h-7" onClick={() => handleEditClick(achiever)}>
+                    <Pencil className="mr-1 h-3 w-3" /> Edit
                   </Button>
-                  <Button variant="destructive" size="sm" onClick={() => handleDeleteClick(achiever)}>
-                    <Trash2 className="mr-2 h-4 w-4" /> Delete
+                  <Button variant="destructive" size="sm" className="text-xs px-2 h-7" onClick={() => handleDeleteClick(achiever)}>
+                    <Trash2 className="mr-1 h-3 w-3" /> Delete
                   </Button>
                 </CardFooter>
               </Card>
