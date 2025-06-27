@@ -14,7 +14,8 @@ import AdminSyllabus from "./admin-syllabus"
 import AdminResults from "./admin-results"
 import AdminSessions from "./admin-sessions"
 import AdminTC from "./admin-tc"
-import AdminStaff from "./admin-staff"
+import AdminRealStaff from "./admin-realStaff"
+// import AdminStaff from "./admin-staff"
 import AdminCommittees from "./admin-committe"
 
 export default function AdminDashboard({ user }: { user: any }) {
@@ -83,7 +84,7 @@ export default function AdminDashboard({ user }: { user: any }) {
             <TabsContent value="results"><AdminResults /></TabsContent>
             <TabsContent value="sessions"><AdminSessions /></TabsContent>
             <TabsContent value="tc"><AdminTC /></TabsContent>
-            <TabsContent value="staff"><AdminStaff /></TabsContent>
+            <TabsContent value="staff"><AdminRealStaff/></TabsContent>
             <TabsContent value="committees"><AdminCommittees /></TabsContent>
           </Tabs>
         </main>

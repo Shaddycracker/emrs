@@ -69,5 +69,13 @@ export interface PrincipleDesk{
     about: string;
     image: string;
 }
+export interface Staff {
+    id: string;
+    name: string;
+    imageUrl: string;
+    Designation:string;
+    dateOfJoin: Timestamp;
+    employeeCode:string;
+}
 
 
