@@ -14,8 +14,8 @@ import AdminSyllabus from "./admin-syllabus"
 import AdminResults from "./admin-results"
 import AdminSessions from "./admin-sessions"
 import AdminTC from "./admin-tc"
+import AdminVideoGallery from "@/components/admin/admin-gallery-video";
 import AdminRealStaff from "./admin-realStaff"
-// import AdminStaff from "./admin-staff"
 import AdminCommittees from "./admin-committe"
 
 export default function AdminDashboard({ user }: { user: any }) {
@@ -65,6 +65,7 @@ export default function AdminDashboard({ user }: { user: any }) {
                 <TabsTrigger value="notices">Notices</TabsTrigger>
                 <TabsTrigger value="achievers">Achievers</TabsTrigger>
                 <TabsTrigger value="gallery">Gallery</TabsTrigger>
+                <TabsTrigger value="video-Gallery">Videos Gallery</TabsTrigger>
                 <TabsTrigger value="inquiries">Inquiries</TabsTrigger>
                 <TabsTrigger value="syllabus">Syllabus</TabsTrigger>
                 <TabsTrigger value="results">Results</TabsTrigger>
@@ -79,6 +80,7 @@ export default function AdminDashboard({ user }: { user: any }) {
             <TabsContent value="notices"><AdminNotices /></TabsContent>
             <TabsContent value="achievers"><AdminAchievers /></TabsContent>
             <TabsContent value="gallery"><AdminGallery /></TabsContent>
+            <TabsContent value="video-Gallery"><AdminVideoGallery/> </TabsContent>
             <TabsContent value="inquiries"><AdminInquiries /></TabsContent>
             <TabsContent value="syllabus"><AdminSyllabus /></TabsContent>
             <TabsContent value="results"><AdminResults /></TabsContent>
@@ -86,6 +88,7 @@ export default function AdminDashboard({ user }: { user: any }) {
             <TabsContent value="tc"><AdminTC /></TabsContent>
             <TabsContent value="staff"><AdminRealStaff/></TabsContent>
             <TabsContent value="committees"><AdminCommittees /></TabsContent>
+
           </Tabs>
         </main>
       </div>

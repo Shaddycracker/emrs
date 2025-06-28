@@ -78,4 +78,12 @@ export interface Staff {
     employeeCode:string;
 }
 
+export interface GalleryVideo{
+    id:string,
+    video_url: string,
+    uploadedAt: Timestamp
+    category:string,
+    description:string
+}
+
 

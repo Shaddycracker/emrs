@@ -21,7 +21,7 @@ export default async function StaffPage() {
                     {staffList.length > 0 && <table className="w-full min-w-[600px] divide-y divide-gray-200">
                         <thead className="">
                         <tr>
-                            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">Photo</th>git
+                            <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">Photo</th>
                             <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">Name</th>
                             <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">Designation</th>
                             <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">Employee Code</th>
