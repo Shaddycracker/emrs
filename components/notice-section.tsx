@@ -1,49 +1,41 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { getRecentNotices } from "@/firebase/Notices/Notices"
-import { Notice } from "@/firebase/types/types"
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { getRecentNotices } from "@/firebase/Notices/Notices";
+import { Notice } from "@/firebase/types/types";
 
 export default function NoticeSection() {
-    const [notices, setNotices] = useState<Notice[]>([])
+    const [notices, setNotices] = useState<Notice[]>([]);
 
     useEffect(() => {
         const fetchNotices = async () => {
             try {
-                const recentNotices = await getRecentNotices(10)
-                setNotices(recentNotices)
+                const recentNotices = await getRecentNotices(10);
+                setNotices(recentNotices);
             } catch (error) {
-                console.error("Error fetching notices:", error)
+                console.error("Error fetching notices:", error);
             }
-        }
+        };
 
-        fetchNotices()
-    }, [])
+        fetchNotices();
+    }, []);
 
     return (
-        <section className="shadow rounded-xl p-6 h-64 overflow-hidden">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-                📢 Latest Notices
-            </h2>
+        <section className="h-full flex flex-col">
+            <div className="px-2 pb-2">
+                <h2 className="text-xl font-semibold mb-2 flex items-center gap-2">
+                    📢 Latest Notices
+                </h2>
+            </div>
 
-            {/* Scrolling container */}
-            <div className="relative h-full overflow-hidden">
-                <div className="absolute w-full animate-scroll-vertical space-y-4">
-                    {notices.map((notice, index) => (
+            {/* Scrollable Notice List */}
+            <div className="flex-1 overflow-hidden relative">
+                <div className="absolute top-0 left-0 w-full animate-scroll-vertical space-y-3">
+                    {[...notices, ...notices].map((notice, index) => (
                         <Link
                             href={`/notices/${notice.id}`}
                             key={index}
-                            className="block text-blue-600 hover:underline font-medium text-sm"
-                        >
-                            📌 {notice.title}
-                        </Link>
-                    ))}
-                    {/* Repeat notices once to loop smoothly */}
-                    {notices.map((notice, index) => (
-                        <Link
-                            href={`/notices/${notice.id}`}
-                            key={`repeat-${index}`}
                             className="block text-blue-600 hover:underline font-medium text-sm"
                         >
                             📌 {notice.title}
@@ -67,5 +59,5 @@ export default function NoticeSection() {
                 }
             `}</style>
         </section>
-    )
+    );
 }

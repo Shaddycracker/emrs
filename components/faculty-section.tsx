@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Card, CardContent } from '@/components/ui/card';
+import {Card, CardContent} from '@/components/ui/card';
 import {Faculty} from "@/firebase/types/types";
 import {getfaculty} from "@/firebase/faculty/faculty";
 
@@ -12,7 +12,7 @@ interface FacultyCardProps {
     loading: boolean;
 }
 
-const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
+const FacultyCard: React.FC<FacultyCardProps> = ({faculty, loading}) => {
     const [isHovered, setIsHovered] = useState(false)
 
     if (loading) {
@@ -51,7 +51,8 @@ const FacultyCard: React.FC<FacultyCardProps> = ({faculty,loading}) => {
 
 
             {isHovered && faculty && (
-                <div className="absolute inset-0 bg-black bg-opacity-70 text-white flex flex-col items-center justify-center z-20 p-4 transition-opacity duration-300">
+                <div
+                    className="absolute inset-0 bg-black bg-opacity-70 text-white flex flex-col items-center justify-center z-20 p-4 transition-opacity duration-300">
                     <p className="text-sm mb-2">{faculty.position}</p>
                     <Link href="/message" className="text-blue-400 hover:underline">
                         View Message
@@ -68,13 +69,17 @@ interface FacultiesSectionProps {
     loading: boolean;
 }
 
-const FacultiesSection: React.FC<FacultiesSectionProps> = ({ faculties, loading }) => {
+const FacultiesSection: React.FC<FacultiesSectionProps> = ({faculties, loading}) => {
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {faculties.map((faculty, index) => (
-                <FacultyCard key={index} faculty={faculty} loading={loading} />
-            ))}
-        </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {
+                faculties.map((faculty, index) => (
+                    <FacultyCard key={index} faculty={faculty} loading={loading}/>
+                ))
+            }
+            </div>
+
     );
 };
 
@@ -88,35 +93,34 @@ const DemoFaculties: React.FC<DemoFacultiesProps> = () => {
 
     useEffect(() => {
 
-        const fetchFaculty=async ()=>{
-            try{
-                const faculty= await getfaculty()
-                console.log("faculty component :",faculty)
+        const fetchFaculty = async () => {
+            try {
+                const faculty = await getfaculty()
+                console.log("faculty component :", faculty)
                 setFacultiesData(faculty)
-            }
-            catch (err){
+            } catch (err) {
                 console.error("Error fetching faculty:", err)
                 setFacultiesData([
                     {
-                        id:"1",
+                        id: "1",
                         name: 'Upendra Nath Tiwari',
                         imageUrl: 'https://via.placeholder.com/300/0000FF/FFFFFF?Text=Upendra+Tiwari', // Replace with actual image URL
                         position: 'Principal of Eklavya Model Residential School, Behraich',
                     },
                     {
-                        id:"2",
+                        id: "2",
                         name: 'Faculty Member 3',
                         imageUrl: 'https://via.placeholder.com/300/00FF00/FFFFFF?Text=Faculty+3',
                         position: 'Teacher',
                     },
                     {
-                        id:"3",
+                        id: "3",
                         name: 'Faculty Member 4',
                         imageUrl: 'https://via.placeholder.com/300/FFFF00/000000?Text=Faculty+4',
                         position: 'Administrator',
                     },
                 ])
-            }finally {
+            } finally {
                 setLoading(false);
             }
 
@@ -126,7 +130,7 @@ const DemoFaculties: React.FC<DemoFacultiesProps> = () => {
     }, []);
 
     return (
-        <div className="py-12">
+        <section className="h-full flex flex-col">
 
             <div className="container mx-auto px-4">
                 {/*<h2 className="text-3xl font-bold mb-8">Community Partners</h2>*/}
@@ -147,7 +151,7 @@ const DemoFaculties: React.FC<DemoFacultiesProps> = () => {
                     </div>
                 )}
             </div>
-        </div>
+        </section>
     );
 };
 

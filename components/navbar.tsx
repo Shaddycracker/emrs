@@ -15,6 +15,7 @@ export default function Navbar() {
 
     const navItems = [
         {name: "Home", href: "/"},
+        {name: "Recruitment", href: "/recruitment"},
         {name: "Contact", href: "/contact"},
     ]
 
@@ -32,6 +33,25 @@ export default function Navbar() {
     const managementDropDown = [
         {name: "Committee", href: "/committee"},
     ]
+
+    const CoCurricularDropDown = [
+        {name: "House System", href: "/house-system"},
+        {name: "Club In Action", href: "/club-in-action"},
+        {name: "In House Events", href: "/house-in-events"},
+        {name: "House Competition", href: "/house-competition"},
+        {name: "CBSE Initiatives", href: "/cbse-initiatives"},
+        {name: "Assembly Schedules", href: "/assembly-schedules"},
+        {name: "Enrichment Programmes", href: "/enrichment-programmes"},
+        {name: "Student Councils", href: "/student-councils"},
+    ]
+    const InfoPointDropDown = [
+        {name: "Code Of Conduct", href: "/code-of-conduct"},
+        {name: "School Timings", href: "/school-timings"},
+        {name: "List Of Holidays", href: "/list-of-holidays"},
+        {name: "Bell Timings", href: "/bell-timings"},
+        {name: "Circular", href: "/circular"},
+    ];
+
 
     const academicDropDown = [
         {name: "Result", href: "/result"},
@@ -92,7 +112,7 @@ export default function Navbar() {
                 className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 w-full">
                 <div className="container flex h-16 items-center justify-between">
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-8 w-full justify-between">
+                    <nav className="hidden md:flex items-center gap-4 w-full justify-between">
 
                         <Link
                             href="/"
@@ -103,12 +123,21 @@ export default function Navbar() {
 
 
                         {renderDropdown("About Us", aboutUsDropDown)}
+                        {renderDropdown("Co Curricular", CoCurricularDropDown)}
                         {renderDropdown("Gallery", galleryDropDown)}
                         {renderDropdown("Staff", staffDropDown)}
                         {renderDropdown("Academics", academicDropDown)}
                         {renderDropdown("Notices", noticesDropDown)}
+                        {renderDropdown("Info Point",InfoPointDropDown)}
                         {renderDropdown("Management", managementDropDown)}
                         {renderDropdown("Achievers", achieversDropDown)}
+
+                        <Link
+                            href="/recruitment"
+                            className={`text-sm font-medium transition-colors hover:text-primary`}
+                        >
+                            Recruitment
+                        </Link>
 
                         <Link
                             href="/contact"
@@ -187,6 +216,22 @@ export default function Navbar() {
                                             </Link>
                                         ))}
                                     </div>
+                                    <div className="mt-2">
+                                        <div className="text-base font-semibold mb-1"> Co Curricular</div>
+                                        {
+                                            CoCurricularDropDown.map((subItem) => (
+                                                <Link
+                                                    key={subItem.name}
+                                                    href={subItem.href}
+                                                    className="block px-2 py-1 text-sm hover:text-primary"
+                                                    onClick={() => setIsOpen(false)}
+                                                >
+                                                    {subItem.name}
+                                                </Link>
+                                            ))
+                                        }
+
+                                    </div>
 
                                     <div className="mt-2">
                                         <div className="text-base font-semibold mb-1">Academics</div>
@@ -214,6 +259,20 @@ export default function Navbar() {
                                             </Link>
                                         ))}
                                     </div>
+                                    <div className="mt-2">
+                                        <div className="text-base font-semibold mb-1">Info Point</div>
+                                        {InfoPointDropDown.map((subItem) => (
+                                            <Link
+                                                key={subItem.name}
+                                                href={subItem.href}
+                                                className="block px-2 py-1 text-sm hover:text-primary"
+                                                onClick={() => setIsOpen(false)}
+                                            >
+                                                {subItem.name}
+                                            </Link>
+                                        ))}
+                                    </div>
+
 
                                     <div className="mt-2">
                                         <div className="text-base font-semibold mb-1">Notices</div>

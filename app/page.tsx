@@ -18,7 +18,6 @@ export default function Home() {
 
                 <ThoughtMarquee
                     text="The only way to do great work is to love what you do. - Steve Jobs"
-                    speed="fast"
                     direction="left"
                     className="bg-primary/10"
                 />
