@@ -1,5 +1,5 @@
 "use client"
-
+export const dynamic = "force-dynamic"
 import { useEffect, useState } from "react"
 import { getAllCommittees } from "@/firebase/commitee/commitee"
 import { Committee } from "@/firebase/types/types"
