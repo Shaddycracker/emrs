@@ -1,5 +1,5 @@
 // app/staff/page.tsx or src/pages/staff.tsx
-
+"use client"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import {Separator} from "@/components/ui/separator"
