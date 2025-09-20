@@ -1,3 +1,5 @@
+"use client"
+export const dynamic = "force-dynamic"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
 import { Separator } from "@/components/ui/separator"
