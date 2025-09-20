@@ -100,19 +100,54 @@ export default function Navbar() {
 
     return (
         <>
-            <div className="w-full bg-white flex items-center justify-center">
-                <img
-                    src="https://www.emrssukma.in/wp-content/uploads/2025/04/full-width-banner-sukma-3000-x-400.png"
-                    alt="EMRS Banner"
-                    style={{width: "100%", height: "100px"}}
-                />
+            <div
+                className="w-full flex items-center justify-between px-4 lg:px-8 border-b-4 font-sans text-black dark:text-white">
+
+                <div className="flex-shrink-0">
+                    <img
+                        src="https://files.edgestore.dev/qrpzodiuv5ggrw1l/publicFiles/_public/emrs_logo.png"
+                        alt="Eklavya Model Residential School Logo"
+                        className="h-24 w-24 object-contain"
+                    />
+                </div>
+
+                <div className="flex-grow text-center md:mx-4 md:my-2 md:my-0 text-fuchsia-900 text-sm">
+                    <h2 className="text-sm font-bold leading-tight md:text-2xl">
+                        Eklavya Model Residential School <span className="font-normal text-black dark:text-white">Bojhiya Bahraich</span>
+                        <span
+                            className="font-normal">(U.P)</span>
+                    </h2>
+                    <p className="text-xs md:text-sm mt-1 hidden md:block">
+                        (Under National Education Society For Tribal Students, New Delhi) | (An Autonomous Body Under
+                        Ministry Of Tribal Affairs)
+                    </p>
+                    <p className="text-xs md:text-sm mt-1">
+                        CBSE Affiliation No : <span
+                        className="font-normal text-black dark:text-white"> 2120154 </span> | School Code : <span
+                        className="font-normal text-black dark:text-white"> 72153</span> | UDISE CODE : <span
+                        className="font-normal text-black dark:text-white"> 09501105603 </span>
+                    </p>
+                </div>
+
+                <div className="flex-shrink-0 md:flex items-center gap-2 mt-2 md:mt-0 hidden">
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/e/ee/Azadi-Ka-Amrit-Mahotsav-Logo.png"
+                        alt="Azadi Ka Amrit Mahotsav"
+                        className="h-12 w-auto object-contain"
+                    />
+                    <img
+                        src="https://upload.wikimedia.org/wikipedia/commons/8/84/Government_of_India_logo.svg"
+                        alt="Government of India"
+                        className="h-12 w-auto object-contain"
+                    />
+                </div>
             </div>
 
             <header
                 className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 w-full">
                 <div className="container flex h-16 items-center justify-between">
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-4 w-full justify-between">
+                    <nav className="hidden lg:flex items-center gap-4 w-full justify-between">
 
                         <Link
                             href="/"
@@ -128,7 +163,7 @@ export default function Navbar() {
                         {renderDropdown("Staff", staffDropDown)}
                         {renderDropdown("Academics", academicDropDown)}
                         {renderDropdown("Notices", noticesDropDown)}
-                        {renderDropdown("Info Point",InfoPointDropDown)}
+                        {renderDropdown("Info Point", InfoPointDropDown)}
                         {renderDropdown("Management", managementDropDown)}
                         {renderDropdown("Achievers", achieversDropDown)}
 
@@ -153,7 +188,7 @@ export default function Navbar() {
                     </nav>
 
                     {/* Mobile Navigation */}
-                    <div className="flex items-center justify-between w-full gap-2 md:hidden">
+                    <div className="flex items-center justify-between w-full gap-2 lg:hidden">
                         <ModeToggle/>
                         <Sheet open={isOpen} onOpenChange={setIsOpen}>
                             <SheetTrigger asChild>
