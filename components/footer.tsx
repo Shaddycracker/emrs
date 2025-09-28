@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <h3 className="text-lg font-semibold mb-4">EMRS</h3>
+            <h3 className="text-lg font-semibold mb-4"> EKLAVYA MODEL RESIDENCIAL SCHOOL</h3>
             <p className="text-sm text-muted-foreground mb-4">
               Nurturing minds, building futures. Our commitment to EMRS and holistic development makes us
               the premier choice for education.
@@ -64,21 +64,23 @@ export default function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 text-primary" />
-                <span className="text-muted-foreground">123 Education Street, Knowledge City, 110001</span>
+                <span className="text-muted-foreground">
+             BOJHIYA DISTRICT BAHRAICH UTTAR PRADESH 271855,
+            </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-primary" />
-                <span className="text-muted-foreground">+91 98765 43210</span>
+                <span className="text-muted-foreground">8006574000,</span>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 mr-2 text-primary" />
-                <span className="text-muted-foreground">info@emrs.edu</span>
+                <span className="text-muted-foreground">emrsbojhiya2017@gmail.com</span>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">
+        <div className="border-t mt-8 pt-8 text-center text-sm text-muted-foreground">g
           <p>&copy; {new Date().getFullYear()} EMRS. All rights reserved. Created By: <Link className="hover:text-blue-200 hover:underline" href="https://www.nextgenscale.in" target="_blank" >NextGenScale</Link></p>
         </div>
       </div>

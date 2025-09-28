@@ -1,6 +1,6 @@
+"use client"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
-import { Separator } from "@/components/ui/separator"
 import { getAboutUs } from "@/firebase/AboutUs/About"
 
 export default async function AboutPage() {
