@@ -17,9 +17,9 @@ export default function ImageCarousel() {
         // const galleryImages = await getGalleryImages(5) // Limit to 5 images for carousel
         // setImages(galleryImages)
         setImages([
-          { id: 1, url: "https://www.emrssukma.in/wp-content/uploads/2021/11/building-front1.jpeg", caption: "School Building" },
-          { id: 2, url: "https://www.emrssukma.in/wp-content/uploads/2025/04/a3-scaled.jpg", caption: "Sports Day" },
-          { id: 3, url: "https://www.emrssukma.in/wp-content/uploads/2025/04/a6.jpg", caption: "Science Exhibition" },
+          { id: 1, url: "https://files.edgestore.dev/qrpzodiuv5ggrw1l/publicFiles/_public/b9fca90f-655a-46f5-9fba-0b2fbde43509.jpg", caption: "School Building" },
+          { id: 2, url: "https://files.edgestore.dev/qrpzodiuv5ggrw1l/publicFiles/_public/49e2204d-cccc-439f-8d63-1a0cdafa97ce.jpg", caption: "Sports Day" },
+          { id: 3, url: "https://files.edgestore.dev/qrpzodiuv5ggrw1l/publicFiles/_public/192f7bfd-5173-4698-98f0-33f059f00300.jpg", caption: "Science Exhibition" },
         ])
       } catch (error) {
         console.error("Error fetching images:", error)
